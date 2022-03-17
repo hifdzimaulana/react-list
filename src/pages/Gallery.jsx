@@ -41,7 +41,6 @@ class Gallery extends Component {
       ],
 
       selected: {
-        index: undefined,
         isbn: "",
         judul: "",
         penulis: "",
@@ -49,6 +48,7 @@ class Gallery extends Component {
         harga: "",
         cover: "",
       },
+      selectedIndex: null,
       openConfirmModal: false,
       openEditModal: false,
       openAddModal: false,
@@ -56,19 +56,13 @@ class Gallery extends Component {
   }
 
   Drop = (index) => {
-    let selected = this.state.selected;
-    selected.index = index;
-
     this.setConfirmModal(true);
-    this.setState({ selected });
+    this.setState({ selectedIndex: index });
   };
 
   Edit = (index, items) => {
-    let selected = { index: index, ...items };
-    selected.index = index;
-
     this.setEditModal(true);
-    this.setState({ selected });
+    this.setState({ selected: items, selectedIndex: index });
   };
 
   clearSelected = () => {
@@ -77,7 +71,7 @@ class Gallery extends Component {
       selected[key] = "";
     });
 
-    this.setState({ selected });
+    this.setState({ selected, selectedIndex: null });
   };
 
   setAddModal = (input) => {
@@ -98,7 +92,7 @@ class Gallery extends Component {
 
   deleteBook = () => {
     let tempBuku = this.state.buku;
-    let index = this.state.selected.index;
+    let index = this.state.selectedIndex;
     tempBuku.splice(index, 1);
 
     this.setState({
@@ -108,14 +102,9 @@ class Gallery extends Component {
 
   saveBook = (data) => {
     let tempBuku = this.state.buku;
-    tempBuku[this.state.selected.index] = data;
+    tempBuku[this.state.selectedIndex] = data;
 
-    this.setState(
-      {
-        buku: tempBuku,
-      },
-      () => console.log(this.state.buku)
-    );
+    this.setState({ buku: tempBuku });
   };
 
   addBook = (data) => {

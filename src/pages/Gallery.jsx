@@ -65,29 +65,16 @@ class Gallery extends Component {
     this.setState({ selected: items, selectedIndex: index });
   };
 
-  clearSelected = () => {
-    let selected = this.state.selected;
-    Object.keys(selected).forEach((key) => {
-      selected[key] = "";
-    });
-
-    this.setState({ selected, selectedIndex: null });
-  };
-
   setAddModal = (input) => {
     this.setState({ openAddModal: input });
   };
 
   setConfirmModal = (input) => {
     this.setState({ openConfirmModal: input });
-
-    if (input === false) this.clearSelected();
   };
 
   setEditModal = (input) => {
     this.setState({ openEditModal: input });
-
-    if (input === false) this.clearSelected();
   };
 
   deleteBook = () => {

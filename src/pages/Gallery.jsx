@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { SearchCircleIcon, PlusCircleIcon } from "@heroicons/react/solid";
 
 import Card from "../components/Card";
 import ModalConfirm from "../components/ModalConfirm";
 import ModalEdit from "../components/ModalEdit";
 import ModalAdd from "../components/ModalAdd";
+import AddBook from "../components/AddBook";
+import Search from "../components/Search";
 
 class Gallery extends Component {
   constructor() {
@@ -52,6 +53,9 @@ class Gallery extends Component {
       openConfirmModal: false,
       openEditModal: false,
       openAddModal: false,
+
+      keyword: "",
+      filtered: [],
     };
   }
 
@@ -101,46 +105,54 @@ class Gallery extends Component {
     this.setState({ buku });
   };
 
+  searching = (newKeyword) => {
+    let keyword = newKeyword.toLowerCase();
+    let tempBuku = this.state.buku;
+    let result = tempBuku.filter((item) => {
+      return (
+        item.judul.toLocaleLowerCase().includes(keyword) ||
+        item.penulis.toLocaleLowerCase().includes(keyword) ||
+        item.penerbit.toLocaleLowerCase().includes(keyword)
+      );
+    });
+
+    this.setState({ filtered: result, keyword });
+    // console.log("you just pressed enter key, keyword = " + keyword);
+  };
+
   render() {
     return (
-      <div>
+      <div className="mb-8">
         <div class="flex justify-between items-center py-2 px-6 space-x-6 bg-white rounded-b-xl transform transition duration-500">
-          <div>
-            <button
-              className="flex items-center py-2 rounded-xl px-2 space-x-1.5 bg-blue-600 text-white"
-              onClick={() => this.setAddModal(true)}
-            >
-              <PlusCircleIcon className="w-7 h-7" />
-              <span className="font-semibold">Add book</span>
-            </button>
-          </div>
-          <div className="flex items-center">
-            <div class="flex bg-gray-100 p-4 w-72 space-x-4 rounded-lg">
-              <SearchCircleIcon className="w-7 h-7 text-gray-600 " />
-              <input
-                class="bg-gray-100 outline-none"
-                type="text"
-                placeholder="Book title..."
-              />
-            </div>
-            <div class="bg-indigo-600 py-3 px-5 text-white font-semibold rounded-lg hover:shadow-lg transition duration-3000 cursor-pointer">
-              <span>Search</span>
-            </div>
-          </div>
+          <AddBook setAddModal={this.setAddModal} />
+          <Search searching={this.searching} />
         </div>
 
-        {this.state.buku.map((item, index) => (
-          <Card
-            key={index}
-            cover={item.cover}
-            judul={item.judul}
-            penulis={item.penulis}
-            penerbit={item.penerbit}
-            harga={item.harga}
-            onEdit={() => this.Edit(index, item)}
-            onDrop={() => this.Drop(index)}
-          />
-        ))}
+        {this.state.keyword
+          ? this.state.filtered.map((item, index) => (
+              <Card
+                key={index}
+                cover={item.cover}
+                judul={item.judul}
+                penulis={item.penulis}
+                penerbit={item.penerbit}
+                harga={item.harga}
+                onEdit={() => this.Edit(index, item)}
+                onDrop={() => this.Drop(index)}
+              />
+            ))
+          : this.state.buku.map((item, index) => (
+              <Card
+                key={index}
+                cover={item.cover}
+                judul={item.judul}
+                penulis={item.penulis}
+                penerbit={item.penerbit}
+                harga={item.harga}
+                onEdit={() => this.Edit(index, item)}
+                onDrop={() => this.Drop(index)}
+              />
+            ))}
 
         <ModalConfirm
           openModal={this.state.openConfirmModal}

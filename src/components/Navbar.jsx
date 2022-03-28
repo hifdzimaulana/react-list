@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Navbar(props) {
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-violet-500 to-fuchsia-500 p-4 ">
+    <nav className="flex items-center justify-between flex-wrap bg-gradient-to-r from-violet-500 to-fuchsia-500 p-4">
       <Link to={"/"}>
         <div className="flex items-center flex-shrink-0 text-white mr-6">
           <svg
@@ -36,9 +36,15 @@ function Navbar(props) {
         <div className="text-sm lg:flex-grow">
           <Link
             to={"/gallery"}
-            className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4 text-lg"
+            className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4 text-lg hover:bg-black/20 py-2 px-4 rounded"
           >
             Gallery
+          </Link>
+          <Link
+            to={"/event-scheduler"}
+            className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4 text-lg hover:bg-black/20 py-2 px-4 rounded"
+          >
+            Event calendar
           </Link>
         </div>
       </div>

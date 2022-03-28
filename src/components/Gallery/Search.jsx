@@ -18,12 +18,12 @@ function Search(props) {
 
   return (
     <div className="flex items-center">
-      <div class="flex bg-gray-100 p-4 w-72 space-x-4 rounded-lg">
+      <div className="flex bg-gray-100 p-4 w-72 space-x-4 rounded-lg">
         <SearchCircleIcon className="w-7 h-7 text-gray-600 " />
         <input
-          class="bg-gray-100 outline-none"
+          className="bg-gray-100 outline-none"
           type="text"
-          placeholder="Book title..."
+          placeholder="Title, author, publisher..."
           onChange={onChange}
           onKeyDown={onEnter}
         />

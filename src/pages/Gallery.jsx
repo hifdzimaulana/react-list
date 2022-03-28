@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import Card from "../components/Card";
-import ModalConfirm from "../components/ModalConfirm";
-import ModalEdit from "../components/ModalEdit";
-import ModalAdd from "../components/ModalAdd";
-import AddBook from "../components/AddBook";
-import Search from "../components/Search";
+import Card from "../components/Gallery/Card";
+import ModalConfirm from "../components/Gallery/ModalConfirm";
+import ModalEdit from "../components/Gallery/ModalEdit";
+import ModalAdd from "../components/Gallery/ModalAdd";
+import AddBook from "../components/Gallery/AddBook";
+import Search from "../components/Gallery/Search";
 
 class Gallery extends Component {
   constructor() {
@@ -57,6 +57,10 @@ class Gallery extends Component {
       keyword: "",
       filtered: [],
     };
+  }
+
+  componentDidMount() {
+    document.title = "Gallery";
   }
 
   Drop = (index) => {
@@ -123,7 +127,7 @@ class Gallery extends Component {
   render() {
     return (
       <div className="mb-8">
-        <div class="flex justify-between items-center py-2 px-6 space-x-6 bg-white rounded-b-xl transform transition duration-500">
+        <div className="flex justify-between items-center py-2 px-6 space-x-6 bg-white rounded-b-xl transform transition duration-500">
           <AddBook setAddModal={this.setAddModal} />
           <Search searching={this.searching} />
         </div>

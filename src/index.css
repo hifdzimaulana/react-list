@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#number-counter {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+#number-counter::-webkit-inner-spin-button,
+#number-counter::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}

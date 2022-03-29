@@ -46,6 +46,12 @@ function Navbar(props) {
           >
             Event calendar
           </Link>
+          <Link
+            to={"/shopping-cart"}
+            className="block mt-4 lg:inline-block lg:mt-0 text-white mr-4 text-lg hover:bg-black/20 py-2 px-4 rounded"
+          >
+            Shopping cart
+          </Link>
         </div>
       </div>
     </nav>

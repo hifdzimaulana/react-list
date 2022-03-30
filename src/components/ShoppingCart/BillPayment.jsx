@@ -60,10 +60,20 @@ function BillPayment(props) {
           </div>
           <button
             className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white"
-            onClick={props.setQtyEmpty}
+            onClick={() => props.setOpen(true)}
           >
-            Checkout
+            Continue to payment
           </button>
+          <div className="mt-4">
+            <img
+              src="https://tailwind.build/static/img/logos/cards.png"
+              alt=""
+              srcset=""
+            />
+            <p className="text-center text-slate-600 text-sm">
+              Available payment methods
+            </p>
+          </div>
         </div>
       </div>
     </div>

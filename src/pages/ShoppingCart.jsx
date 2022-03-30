@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BillPayment from "../components/ShoppingCart/BillPayment";
+import SuccessPaymentModal from "../components/ShoppingCart/SuccessPaymentModal";
 
 class ShoppingCart extends Component {
   constructor() {
@@ -63,6 +64,8 @@ class ShoppingCart extends Component {
         subtotal: 0,
         tax: 0,
       },
+
+      paymentModal: false,
     };
   }
 
@@ -92,6 +95,10 @@ class ShoppingCart extends Component {
       cart[i].qty = 0;
     }
     this.setState({ cart });
+  };
+
+  setPaymentModal = (input) => {
+    this.setState({ paymentModal: input });
   };
 
   render() {
@@ -184,6 +191,11 @@ class ShoppingCart extends Component {
         <BillPayment
           cart={this.state.cart}
           rupiahFormat={this.rupiahFormat}
+          setOpen={this.setPaymentModal}
+        />
+        <SuccessPaymentModal
+          openModal={this.state.paymentModal}
+          setOpen={this.setPaymentModal}
           setQtyEmpty={this.setQtyEmpty}
         />
       </div>

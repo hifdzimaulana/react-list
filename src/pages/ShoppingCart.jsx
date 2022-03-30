@@ -1,10 +1,24 @@
 import React, { Component } from "react";
+import BillPayment from "../components/ShoppingCart/BillPayment";
 
 class ShoppingCart extends Component {
   constructor() {
     super();
     this.state = {
       cart: [
+        {
+          product: {
+            brand: "Takashi Murakami",
+            name: "Flower Push",
+            img_url:
+              "https://images.stockx.com/images/Takashi-Murakami-Flower-Plush-30CM-Rainbow-V6.jpg?fit=fill&bg=FFFFFF&w=480&h=320&fm=webp&auto=compress&q=90&dpr=1&trim=color&updated_at=1637353448",
+            properties: {
+              diameter: "30cm",
+            },
+            price: 1305000,
+          },
+          qty: 0,
+        },
         {
           product: {
             brand: "Marhen J.",
@@ -16,6 +30,16 @@ class ShoppingCart extends Component {
               coating: "PVC waterproof",
             },
             price: 1456000,
+          },
+          qty: 0,
+        },
+        {
+          product: {
+            brand: "Lego",
+            name: "McLaren Formula 1 Team Race Car Set",
+            img_url:
+              "https://images.stockx.com/images/LEGO-Technic-Mclaren-Formula-1-Team-Race-Car-Set-42141.jpg?fit=fill&bg=FFFFFF&w=480&h=320&fm=webp&auto=compress&q=90&dpr=1&trim=color&updated_at=1644594695",
+            price: 2599000,
           },
           qty: 0,
         },
@@ -46,6 +70,7 @@ class ShoppingCart extends Component {
     return new Intl.NumberFormat("id", {
       currency: "IDR",
       style: "currency",
+      maximumFractionDigits: 0,
     }).format(nominal);
   };
 
@@ -61,6 +86,14 @@ class ShoppingCart extends Component {
     this.setState({ cart });
   };
 
+  setQtyEmpty = () => {
+    var { cart } = this.state;
+    for (let i = 0; i < cart.length; i++) {
+      cart[i].qty = 0;
+    }
+    this.setState({ cart });
+  };
+
   render() {
     return (
       <div className="flex md:flex-row flex-col justify-end" id="cart">
@@ -73,18 +106,18 @@ class ShoppingCart extends Component {
           </p>
           {this.state.cart.map((value, index) => (
             <div
-              className="md:flex items-center mt-14 py-8 gap-9 border-t border-gray-200"
+              className="flex items-center mt-14 py-8 gap-9 border-t border-gray-200"
               key={index}
             >
               <div
-                className="xl:w-52 xl:h-64 bg-cover bg-center rounded-md"
+                className="xl:w-72 xl:h-80 md:w-52 md:h-64 w-44 h-52 bg-cover bg-center rounded-md"
                 style={{
                   backgroundImage: `url("${value.product.img_url}")`,
                 }}
               ></div>
               <div className="md:pl-3 md:w-3/4">
-                <div className="flex items-center justify-between w-full pt-1">
-                  <div className="grid xl:gap-20 md:gap-6 justify-around">
+                <div className="xl:flex md:flex xl:items-center xl:justify-between md:justify-between w-full pt-1">
+                  <div className="grid xl:gap-20 md:gap-6 gap-5 justify-around">
                     <div id="product-brand">
                       <p className="uppercase font-medium">
                         {value.product.brand}
@@ -94,23 +127,24 @@ class ShoppingCart extends Component {
                       </p>
                     </div>
                     <div id="product-properties">
-                      {Object.keys(value.product.properties).map(
-                        (property, propertyIndex) => (
-                          <p key={propertyIndex} className="text-xs">
-                            <span className="font-bold uppercase">
-                              -{property}
-                            </span>
-                            :{" "}
-                            {
-                              value.product.properties[
-                                Object.keys(value.product.properties)[
-                                  propertyIndex
+                      {value.product.properties &&
+                        Object.keys(value.product.properties).map(
+                          (property, propertyIndex) => (
+                            <p key={propertyIndex} className="text-sm">
+                              <span className="font-semibold font-mono uppercase">
+                                {property}
+                              </span>
+                              :{" "}
+                              {
+                                value.product.properties[
+                                  Object.keys(value.product.properties)[
+                                    propertyIndex
+                                  ]
                                 ]
-                              ]
-                            }
-                          </p>
-                        )
-                      )}
+                              }
+                            </p>
+                          )
+                        )}
                     </div>
                     <p className="text-lg font-black leading-none text-gray-800">
                       {this.rupiahFormat(value.product.price)}
@@ -147,38 +181,11 @@ class ShoppingCart extends Component {
             </div>
           ))}
         </div>
-        <div className="md:w-1/3 xl:w-1/4 w-full bg-gray-100">
-          <div className="md:h-screen px-14 py-20">
-            <div>
-              <p className="text-4xl font-black leading-9 text-gray-800">
-                Invoice
-              </p>
-              <div className="flex items-center justify-between pt-16">
-                <p className="text-base leading-none text-gray-800">Subtotal</p>
-                <p className="text-base leading-none text-gray-800">$9,000</p>
-              </div>
-              <div className="flex items-center justify-between pt-5">
-                <p className="text-base leading-none text-gray-800">Shipping</p>
-                <p className="text-base leading-none text-gray-800">$30</p>
-              </div>
-              <div className="flex items-center justify-between pt-5">
-                <p className="text-base leading-none text-gray-800">Tax</p>
-                <p className="text-base leading-none text-gray-800">$35</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center pb-6 justify-between lg:pt-5 pt-20">
-                <p className="text-2xl leading-normal text-gray-800">Total</p>
-                <p className="text-2xl font-bold leading-normal text-right text-gray-800">
-                  $10,240
-                </p>
-              </div>
-              <button className="text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white">
-                Checkout
-              </button>
-            </div>
-          </div>
-        </div>
+        <BillPayment
+          cart={this.state.cart}
+          rupiahFormat={this.rupiahFormat}
+          setQtyEmpty={this.setQtyEmpty}
+        />
       </div>
     );
   }
